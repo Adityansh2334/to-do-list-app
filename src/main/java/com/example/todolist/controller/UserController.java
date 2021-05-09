@@ -1,5 +1,6 @@
 package com.example.todolist.controller;
 
+import com.example.todolist.awsConfig.BucketHandler;
 import com.example.todolist.dto.LoginUserValid;
 import com.example.todolist.entity.Notes;
 import com.example.todolist.entity.Users;
@@ -20,10 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @Controller
 @RequestMapping("/")
@@ -33,54 +38,37 @@ public class UserController {
     private UserServices userServices;
     @Autowired
     private NoteServices noteServices;
+    @Autowired
+    private BucketHandler bucketHandler;
 
-    @RequestMapping(value = "/singupform",method = RequestMethod.POST)
+    @RequestMapping(value = "/singupform", method = RequestMethod.POST)
     public ModelAndView signUpUser(Users users) {
-        if(users.getImage().isEmpty()){
-            try {
-                File f= new File("images\\common.png");
-                FileItem ft= new DiskFileItem("mainfile", Files.probeContentType(f.toPath()),
-                        false,f.getName(),(int)f.length(),f.getParentFile());
-                IOUtils.copy(new FileInputStream(f),ft.getOutputStream());
-                MultipartFile cf= new CommonsMultipartFile(ft);
-                users.setImage(cf);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (users.getImage().isEmpty()) {
+            users.setUser_image(bucketHandler.getCommonImageUrl());
+        }else{
+        final URL url = bucketHandler.uplaodImage(users.getUser_fname(), users.getImage());
+        users.setUser_image(url);
         }
         userServices.saveUsersData(users);
-        return new ModelAndView("signin","regSuccessMsg","Registration Successful!");
+        return new ModelAndView("signin", "regSuccessMsg", "Registration Successful!");
     }
 
     @PostMapping("/signin")
-    public ModelAndView getUserData(LoginUserValid loginUserValid, HttpServletRequest req){
-        Users userData=null;
-        FileOutputStream fos=null;
-        try{
+    public ModelAndView getUserData(LoginUserValid loginUserValid, HttpServletRequest req) {
+        Users userData = null;
+        try {
             userData = userServices.getUserData(loginUserValid.getUsername(), loginUserValid.getPassword());
-            if(userData!=null){
-                Blob image = userData.getUser_image();
-                byte[] bytes = image.getBytes(1, (int)image.length());
-                fos=new FileOutputStream("images\\image1.png");
-                fos.write(bytes);
-                fos.flush();
-                System.out.println("write image completed");
+            if (userData != null) {
                 List<Notes> notesByUser = noteServices.getNotesByUser(userData.getId());
-                if(notesByUser!=null)req.getSession().setAttribute("notesList",notesByUser);
-                req.getSession().setAttribute("users",userData);
-                return new ModelAndView("AddNoteWelcome","userdata",userData);
+                if (notesByUser != null) req.getSession().setAttribute("notesList", notesByUser);
+                req.getSession().setAttribute("users", userData);
+                return new ModelAndView("AddNoteWelcome", "userdata", userData);
             }
-            }catch (Exception e){
-                e.printStackTrace();
-            }finally {
-            try {
-               if(fos!=null) fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return new ModelAndView("signin","errorMsg","User Invalid!"+"" +
+        return new ModelAndView("signin", "errorMsg", "User Invalid!" + "" +
                 "</br> Please Check your Id & Password");
-        }
     }
+}
 

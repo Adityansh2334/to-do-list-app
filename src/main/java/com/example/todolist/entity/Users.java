@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
+import java.net.URL;
 
 @Entity
 @Table(name = "user_data")
@@ -29,9 +29,8 @@ public class Users implements Serializable {
     private String user_password;
     @Column(name = "user_gender")
     private String user_gender;
-    @Lob
     @Column(name = "user_image")
-    private Blob user_image;
+    private URL user_image;
     @Transient
     private MultipartFile image;
 
@@ -83,11 +82,11 @@ public class Users implements Serializable {
         this.user_gender = user_gender;
     }
 
-    public Blob getUser_image() {
+    public URL getUser_image() {
         return user_image;
     }
 
-    public void setUser_image(Blob user_image) {
+    public void setUser_image(URL user_image) {
         this.user_image = user_image;
     }
 
@@ -106,6 +105,8 @@ public class Users implements Serializable {
     public void setUser_name(String user_name) {
         this.user_name = user_name;
     }
+
+
 
     @Override
     public String toString() {

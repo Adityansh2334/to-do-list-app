@@ -1,4 +1,5 @@
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: Aditya K
   Date: 07-05-2021
@@ -14,7 +15,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Update</title>
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
@@ -24,7 +24,6 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -34,16 +33,18 @@
 <%
     String s1 = (String) request.getAttribute("s1");
     String s2 = (String) request.getAttribute("s2");
-    String curDate= new Date().toString();
-    curDate=curDate.substring(0,curDate.indexOf("IST 2021"));
+
+    String pattern = "yyyy-MMMMM-dd hh:mm";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    String date = simpleDateFormat.format(new Date());
+
     String defaultTodo;
     String crDate;
     String btName;
     String action;
     String method;
-    String targetDate="";
-    if(s1==null && s2==null){
-        crDate=curDate;
+    if(s1.equals("null") && s2.equals("null")){
+        crDate=date;
         defaultTodo="Write your todo";
         btName="Save";
         method="post";
@@ -61,7 +62,7 @@
     <div class="container-table100">
         <div class="wrap-table100">
             <div style="text-align: center">
-                <img src="/images/image1.png" alt="" style=" border-radius:20%; height: 100px;width: 100px">
+                <img src="${userdata.user_image}" alt="" style=" border-radius:20%; height: 100px;width: 100px">
                 <h1>Manage Your Todo List's</h1>
             </div>
             <a href="/backtoView"><button type="button" class="btn btn-info">Back</button></a>
@@ -94,7 +95,9 @@
                         <tbody>
                         <tr class="row100 body">
                             <td  class="cell100 column1"><textarea style="width:90%" id="td1" ><%=defaultTodo%></textarea></td>
-                            <td id="td2"`class="cell100 column2"><%= crDate %></td>
+                            <td id="td2"`class="cell100 column2">
+                                    <%= crDate %>
+                            </td>
                             <td  class="cell100 column3"><input type="datetime-local" id="td3" required></td>
                             <td class="cell100 column4">
                                 <div class="form-check">

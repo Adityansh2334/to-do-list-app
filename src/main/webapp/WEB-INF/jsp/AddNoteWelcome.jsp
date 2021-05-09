@@ -20,7 +20,6 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -36,7 +35,7 @@
     <div class="container-table100">
         <div class="wrap-table100">
             <div style="text-align: center">
-                <img src="/images/image1.png" alt="" style=" border-radius:20%; height: 100px;width: 100px">
+                <img src="${userdata.user_image}" alt="" style=" border-radius:20%; height: 100px;width: 100px">
                 <h1>Welcome ${userdata.user_fname}</h1>
             </div>
             <a href="/addview">

@@ -1,5 +1,6 @@
 package com.example.todolist.controller;
 
+import com.example.todolist.awsConfig.BucketHandler;
 import com.example.todolist.entity.Notes;
 import com.example.todolist.entity.Users;
 import com.example.todolist.service.NoteServices;
@@ -35,16 +36,18 @@ public class AddNoteController {
     }
     @RequestMapping("/addview")
     public ModelAndView addNoteView(HttpServletRequest req){
-        req.setAttribute("s1",null);
-        req.setAttribute("s2",null);
-        return new ModelAndView("AddUpdateNote");
+        Users users = (Users)req.getSession().getAttribute("users");
+        req.setAttribute("s1","null");
+        req.setAttribute("s2","null");
+        return new ModelAndView("AddUpdateNote","userdata", users);
     }
 
     @GetMapping("/updateserv")
     public ModelAndView updateNoteView(Notes notes,HttpServletRequest req) {
+        Users user = (Users)req.getSession().getAttribute("users");
         req.setAttribute("s1",notes.getUser_note());
         req.setAttribute("s2",notes.getCreate_date());
-        return new ModelAndView("AddUpdateNote");
+        return new ModelAndView("AddUpdateNote","userdata", user);
     }
 
     @PostMapping("/noteupdate")

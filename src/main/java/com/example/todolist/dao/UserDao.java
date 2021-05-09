@@ -29,13 +29,9 @@ public class UserDao {
             try {
                 session = getSession();
                 Transaction transaction = session.beginTransaction();
-                MultipartFile image = users.getImage();
-                byte[] bytes = image.getBytes();
-                Blob serialBlob = new SerialBlob(bytes);
-                users.setUser_image(serialBlob);
                 session.save(users);
                 transaction.commit();
-            }catch (HibernateException | IOException | SQLException e){
+            }catch (HibernateException  e){
                 e.printStackTrace();
             }
         }

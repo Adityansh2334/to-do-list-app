@@ -127,7 +127,7 @@
 <div class="signup-form">
     <form action="/singupform" onSubmit="return doValidation(this)" method="post" enctype="multipart/form-data" >
         <img style="margin-left:85px;border-radius: 50%; cursor: pointer;" id="imgFileUpload" alt="Select File" title="Select File" src="https://png2.cleanpng.com/sh/335a849ef36f58ef86c670c8be1c049d/L0KzQYm3WcIxN6pngJH0aYP2gLBuTfNwdaF6jNd7LXnmf7B6TgBweqVmet5uLX7ohMj2kvsub6NmiNpyY4OwccfolPFzNZpoRadrYUPmRofsU8A3amI6RqICNUa1R4KAUcU0P2U6Uao7MkG8SIS1kP5o/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66e306b15.0756271715374598221983.png" width="150" height="150" />
-        <span id="spnFilePath">*Max 16Mb</span>
+        <span id="spnFilePath">*Max 5Mb</span>
         <input type="file" id="FileUpload1" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" style="display: none" />
         <!-- <div class="custom-file">
             <img style="margin-left:25px;" src="avatar.png" width="100" height="100" />
@@ -243,6 +243,7 @@
     }
     // const lo= ()=> document.getElementById("lout").style.visibility='visible';
     // document.onload(lo());
+
 
 </script>
 

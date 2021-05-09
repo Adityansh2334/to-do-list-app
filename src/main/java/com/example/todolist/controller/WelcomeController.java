@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 @Controller
 public class WelcomeController {
 
@@ -20,5 +21,10 @@ public class WelcomeController {
     @RequestMapping("/signupgo")
     public ModelAndView signUpGo(){
         return new ModelAndView("/signup");
+    }
+    @RequestMapping("/search")
+    public String search(HttpServletRequest req){
+        String searchitem = req.getParameter("searchitem");
+        return "redirect:https://www.google.com/search?q="+searchitem;
     }
 }
