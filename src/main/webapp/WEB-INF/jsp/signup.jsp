@@ -73,6 +73,7 @@
             padding-left: 10px;
         }
         .signup-form .btn{
+            position: relative;
             font-size: 16px;
             font-weight: bold;
             background: #3598dc;
@@ -103,6 +104,37 @@
         }
         .signup-form .hint-text a{
             color: crimson;
+        }
+        #submit1{
+            color: ghostwhite;
+            transition: all 0.2s;
+        }
+        .btnSub #submit1{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .btnSub:after{
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loader-spinner 1s ease infinite;
+        }
+        @keyframes button-loader-spinner {
+            from{
+                transform: rotate(0turn);
+            }
+            to{
+                transform: rotate(1turn);
+            }
         }
         /* input[type=file]:focus,.custom-file-input:focus,.custom-file-label {
             outline:none!important;
@@ -175,7 +207,7 @@
             <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
         </div>
         <div class="form-group">
-            <button type="submit" id="submit1" class="btn btn-primary btn-lg" >Sign Up</button>
+            <button type="submit" name="btnAnim" class="btn btn-primary btn-lg" ><span id="submit1" >Sign Up</span></button>
         </div>
         <div class="hint-text">Already have an account? <a href="/signingo">Login here</a></div>
         <br>
@@ -228,18 +260,21 @@
         readURL(this);
     });
 
+
 </script>
 <script>
     function doValidation(form){
         const p1=form.user_password.value;
         const p2=form.confirm_password.value;
+        const ph=form.user_name.value;
+        if(!isNaN(ph) && ph.length!==10)alert("Phone Number Must be 10 digits");
         if(p1 === p2){
+            form.btnAnim.classList.toggle("btnSub")
             return true;
         }else{
             alert("Password not matched");
             return false;
         }
-
     }
     // const lo= ()=> document.getElementById("lout").style.visibility='visible';
     // document.onload(lo());

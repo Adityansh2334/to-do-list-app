@@ -1,5 +1,6 @@
 <%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %><%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="org.joda.time.LocalDate" %><%--
   Created by IntelliJ IDEA.
   User: Aditya K
   Date: 07-05-2021
@@ -27,6 +28,42 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        .btn{
+            position: relative;
+        }
+        .span1{
+            color: ghostwhite;
+            transition: all 0.2s;
+        }
+        .btnSub .span1{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .btnSub:after{
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loader-spinner 1s ease infinite;
+        }
+        @keyframes button-loader-spinner {
+            from{
+                transform: rotate(0turn);
+            }
+            to{
+                transform: rotate(1turn);
+            }
+        }
+    </style>
 </head>
 <body style=" overflow-x: hidden; overflow-y: scroll;">
 <%@include file="common/header.jsp" %>
@@ -36,8 +73,7 @@
 
     String pattern = "yyyy-MMMMM-dd hh:mm";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    String date = simpleDateFormat.format(new Date());
-
+    String date = simpleDateFormat.format(new LocalDate().toDateTimeAtCurrentTime().toDate());
     String defaultTodo;
     String crDate;
     String btName;
@@ -65,7 +101,10 @@
                 <img src="${userdata.user_image}" alt="" style=" border-radius:20%; height: 100px;width: 100px">
                 <h1>Manage Your Todo List's</h1>
             </div>
-            <a href="/backtoView"><button type="button" class="btn btn-info">Back</button></a>
+            <a href="/backtoView"><button type="button" onclick="this.classList.toggle('btnSub')"
+                                          class="btn btn-info">
+            <span class="span1">Back</span>
+            </button></a>
             <hr>
 
             <div style="background-color:rgba(217,169,61,0.78); color: aliceblue;
@@ -125,7 +164,10 @@
                                     <input type="hidden"  name="create_date" value="<%= crDate%>">
                                     <input type="hidden" id="in3" name="target_date" value="">
                                     <input type="hidden" id="in4" name="user_preference" value="">
-                                    <button type="submit" class="btn btn-success"><%= btName %></button>
+                                    <button type="submit" onclick="this.classList.toggle('btnSub')"
+                                            class="btn btn-success">
+                                    <span class="span1"><%= btName %></span>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

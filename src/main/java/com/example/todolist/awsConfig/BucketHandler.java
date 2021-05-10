@@ -9,7 +9,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,8 +17,8 @@ import java.net.URL;
 
 @Component
 public class BucketHandler {
-    private final String key_Id="AKIARPU36A6NJGXBFSIL";
-    private final String secret_key="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";
+    private final String key_Id=""; //put key_id aws IAM
+    private final String secret_key=""; //secret_key aws IAM
     BasicAWSCredentials awsCredentials= new BasicAWSCredentials(key_Id,secret_key);
     final AmazonS3 s3= AmazonS3ClientBuilder
             .standard()

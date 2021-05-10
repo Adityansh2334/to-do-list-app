@@ -43,14 +43,48 @@
             border-color: yellow;
         }
         #btn1:hover{
-            background-color: yellow;
-            color: rgb(165, 55, 55);
+            background-color: #0c5460;
+            color: cornflowerblue;
         }
         #a2{
-            color: springgreen;
+            color: #9fcdff;
         }
         #a2:hover {
-            color: cornflowerblue;
+            color: #b1dfbb;
+        }
+        .btn{
+            position: relative;
+        }
+        .span1{
+            color: ghostwhite;
+            transition: all 0.2s;
+        }
+        .btnSub .span1{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .btnSub:after{
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loader-spinner 1s ease infinite;
+        }
+        @keyframes button-loader-spinner {
+            from{
+                transform: rotate(0turn);
+            }
+            to{
+                transform: rotate(1turn);
+            }
         }
     </style>
 </head>
@@ -61,11 +95,11 @@
     <h6 style="color: #ffc107; text-align: center">${errorMsg}</h6>
     <br>
     <h2 id="h1" align="center">Welcome</h2>
-    <form action="/signin" method="post">
+    <form action="/signin" onsubmit="document.getElementById('btn1').classList.toggle('btnSub')" method="post">
         <div class="subContainer">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+            <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
             <small id="emailHelp" class="form-text text-muted"><span style="color: whitesmoke;">We'll never share your email with anyone else.</span></small>
         </div>
         <div class="form-group">
@@ -77,9 +111,9 @@
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
         <br>
-        <button id="btn1" type="submit" class="btn btn-primary">Sign-In</button>
+        <button id="btn1" type="submit" class="btn btn-primary"><span class="span1">Sign-In</span></button>
 
-        <p>If your are not SignedUp <a id="a2" href="/signupgo">SignUp Now</a></p>
+        <p>If your are not SignedUp <a id="a2" href="/signupgo">Sign-up Now</a></p>
         <br>
         <p align="center">&COPY;TODO App</p>
         </div>

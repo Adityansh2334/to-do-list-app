@@ -24,6 +24,42 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
+    <style>
+        .btn{
+            position: relative;
+        }
+        .span1{
+            color: ghostwhite;
+            transition: all 0.2s;
+        }
+        .btnSub .span1{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .btnSub:after{
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loader-spinner 1s ease infinite;
+        }
+        @keyframes button-loader-spinner {
+            from{
+                transform: rotate(0turn);
+            }
+            to{
+                transform: rotate(1turn);
+            }
+        }
+    </style>
 </head>
 <body style=" overflow-x: hidden; overflow-y: scroll;">
 
@@ -39,7 +75,7 @@
                 <h1>Welcome ${userdata.user_fname}</h1>
             </div>
             <a href="/addview">
-                <button type="button" class="btn btn-info">Add TODO</button>
+                <button type="button" onclick="this.classList.toggle('btnSub')" class="btn btn-info"><span class="span1">Add TODO</span></button>
             </a>
             <p><strong>NOTE:</strong> All HIGH preference/ priority TO-DO's are shown first in the below table.
            [ Asc => Desc ]</p>
@@ -87,14 +123,15 @@
                                             <input type="hidden" name="create_date" value="${ln.create_date}">
                                             <input type="hidden" name="target_date" value="${ln.target_date}">
                                             <input type="hidden" name="user_preference" value="${ln.user_preference}">
-                                            <button type="submit"  class="btn btn-success"
-                                                    style="width: 100">Update
+                                            <button type="submit" onclick="this.classList.toggle('btnSub')" class="btn btn-success"
+                                                    style="width: 100"><span class="span1">Update</span>
                                             </button>
                                         </form>
                                         <form action="/notedelete" method="get" onsubmit=" return check()">
                                             <input type="hidden" name="create_date" value="${ln.create_date}">
                                             <button style="margin-top: 2%;width: 100" type="submit"
-                                                    class="btn btn-danger">Delete
+                                                    onclick="this.classList.toggle('btnSub')"
+                                                    class="btn btn-danger"><span class="span1">Delete</span>
                                             </button>
                                         </form>
                                     </td>
